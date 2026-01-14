@@ -1,0 +1,13 @@
+# Core numerical
+numpy>=1.23,<2.0
+
+# OpenCV (GUI + video I/O)
+opencv-python>=4.8.0
+
+# Ultralytics YOLO (includes torch dependency handling)
+ultralytics>=8.3.0
+
+# PyTorch CPU build
+torch>=2.0.0+cpu
+torchvision>=0.15.0+cpu
+torchaudio>=2.0.0+cpu
