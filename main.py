@@ -20,7 +20,7 @@ os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = (
     "rtsp_transport;tcp|fflags;nobuffer|max_delay;0|buffer_size;102400"
 )
 
-RTSP_URL = "rtsp://admin:Visomni%402026@59.145.221.92:554/Streaming/Channels/102"
+RTSP_URL = "rtsp://admin:%402026@59.145.221.92:554/Streaming/Channels/102"
 
 HEAD_MODEL_PATH = "hemletYoloV8_100epochs.pt"
 HELMET_MODEL_PATH = "/home/priyanshu/Desktop/Internship/helmet_detection/training_best_model/runs/detect/helmet_detector/weights/best.pt"
