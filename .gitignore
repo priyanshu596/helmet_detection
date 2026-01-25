@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual env
+venv/
+.env/
+
+# Models (DO NOT PUSH)
+models/*.pt
+models/*.onnx
+models/*.engine
+
+# Outputs
+captures/
+*.mp4
+*.avi
+
+# OS
+.DS_Store
+Thumbs.db
