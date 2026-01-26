@@ -1,36 +1,59 @@
+# ==========================
+# Base image (CPU, small, stable)
+# ==========================
 FROM python:3.10-slim
 
-# --------------------------
-# System dependencies
-# --------------------------
-RUN apt-get update && apt-get install -y \
-    ffmpeg \
-    libglib2.0-0 \
-    libsm6 \
-    libxext6 \
-    libxrender1 \
-    && rm -rf /var/lib/apt/lists/*
-
-# --------------------------
+# ==========================
 # Environment
-# --------------------------
+# ==========================
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV OPENCV_LOG_LEVEL=ERROR
-ENV OPENCV_FFMPEG_CAPTURE_OPTIONS="rtsp_transport;tcp|fflags;nobuffer|max_delay;0|buffer_size;102400"
 
+# ==========================
+# System dependencies
+# ==========================
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    libsm6 \
+    libxext6 \
+    libgl1 \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# ==========================
+# Working directory
+# ==========================
 WORKDIR /app
 
-# --------------------------
-# Python deps
-# --------------------------
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# ==========================
+# Python dependencies
+# ==========================
+RUN pip install --no-cache-dir --upgrade pip
 
-# --------------------------
-# App code
-# --------------------------
-COPY main.py .
-COPY bytetrack.yaml .
+RUN pip install --no-cache-dir \
+    ultralytics==8.* \
+    opencv-python-headless \
+    flask \
+    numpy \
+    torch --index-url https://download.pytorch.org/whl/cpu
 
+# ==========================
+# Copy project files
+# ==========================
+COPY . /app
+
+# ==========================
+# Create output dirs (safe)
+# ==========================
+RUN mkdir -p captures/helmet captures/no_helmet
+
+# ==========================
+# Expose Flask port
+# ==========================
+EXPOSE 5000
+
+# ==========================
+# Run application
+# ==========================
 CMD ["python", "main.py"]
